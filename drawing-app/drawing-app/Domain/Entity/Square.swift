@@ -15,7 +15,6 @@ struct Square {
     let size: CGSize
     let color: SystemColor
     let point: Point
-    let rect: CGRect
     
     // MARK: - Initializer
     
@@ -28,7 +27,6 @@ struct Square {
         self.size = size
         self.color = color
         self.point = point
-        self.rect = .init(x: point.x, y: point.y, width: size.width, height: size.height)
     }
     
 }

@@ -45,9 +45,13 @@ final class CanvasViewModel: CanvasViewModelProtocol {
     
     let showSquare = PublishRelay<Square>()
     
+    // MARK: - UseCase
+    
+    private var canvasUseCaseProtocol: CanvasUseCaseProtocol?
+    
     // MARK: - Initialize
     
-    init() {
+    init(canvasUseCaseProtocol: CanvasUseCaseProtocol = SquareUsecase()) {
         rxBind()
     }
     
@@ -56,27 +60,20 @@ final class CanvasViewModel: CanvasViewModelProtocol {
     private func rxBind() {
         input.canvasSize
             .bind(with: self, onNext: { owner, canvas in
-                let squareSize = Layout.square.size
-                owner.xRange = canvas.minX...canvas.maxX - squareSize
-                owner.yRange = canvas.minY...canvas.maxY - squareSize
+                owner.canvasUseCaseProtocol?.calculateBoundary(canvas: canvas)
             })
             .disposed(by: disposeBag)
         
+        // TODO: 입출력 흐름 분리
         input.didTapMakeSquareButton
             .bind(with: self, onNext: { owner, _ in
-                guard let square = owner.makeSquare() else { return }
-                owner.output.showSquare.accept(square)
+                owner.canvasUseCaseProtocol?.makeSquare { square in
+                    guard let square else { return }
+                    owner.output.showSquare.accept(square)
+                }
             })
             .disposed(by: disposeBag)
     }
 
-    // MARK: - Function
-    
-    func makeSquare() -> Square? {
-        guard let xRange,
-              let yRange else { return nil }
-        
-        return .init(point: .init(x: .random(in: xRange), y: .random(in: yRange)), color: .random)
-    }
 
 }

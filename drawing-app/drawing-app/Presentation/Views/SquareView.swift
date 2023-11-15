@@ -15,15 +15,19 @@ final class SquareView: UIView {
     // MARK: - Property
     
     private let disposeBag = DisposeBag()
-    private var squareInfo: Square?
     private let didTap = BehaviorRelay<Bool>(value: true)
     
     // MARK: - Initializer
     
     init(with info: Square) {
-        super.init(frame: info.rect)
+        super.init(
+            frame: .init(
+                x: info.point.x,
+                y: info.point.y,
+                width: info.size.width,
+                height: info.size.height
+            ))
         
-        squareInfo = info
         backgroundColor = info.color.uicolor
         rxBind()
     }
