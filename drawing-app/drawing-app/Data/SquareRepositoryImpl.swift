@@ -16,7 +16,7 @@ final class SquareRepositoryImpl: SquareRepository {
     }
     
     func setSquare(_ square: Square) {
-        storage?.addSquares(square)
+        storage?.add(square)
     }
     
 }

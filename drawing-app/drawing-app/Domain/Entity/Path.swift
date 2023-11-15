@@ -16,24 +16,18 @@ struct Path {
     let lineWidth: CGFloat
     var lastPoint: CGPoint
     var currentPoint: CGPoint
-    
-    private let paths: Paths
-    
+
     init(id: UUID = .init(),
          lineColor: SystemColor = .random,
          lineWidth: CGFloat = 10.0,
          lastPoint: CGPoint = CGPoint.zero,
-         currentPoint: CGPoint = CGPoint.zero,
-         paths: Paths = .init()
+         currentPoint: CGPoint = CGPoint.zero
     ) {
         self.id = id
         self.lineColor = lineColor
         self.lineWidth = lineWidth
         self.lastPoint = lastPoint
         self.currentPoint = currentPoint
-        self.paths = paths
-        
-        paths.addPaths(lastPoint)
     }
     
 }

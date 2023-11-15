@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol PathRepository {
+    func setPath(_ path: Path)
+}
